@@ -1,0 +1,6 @@
+@AuthSampleTest.Server_HostAddress = http://localhost:5243
+
+GET {{AuthSampleTest.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
