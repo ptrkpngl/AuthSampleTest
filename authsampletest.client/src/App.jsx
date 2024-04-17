@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import './SignInOutButton';
+import SignInOutButton from './SignInOutButton';
 
 function App() {
     const [forecasts, setForecasts] = useState();
@@ -7,28 +9,6 @@ function App() {
     useEffect(() => {
         populateWeatherData();
     }, []);
-
-    const SignInOutButton = () => {
-        const [userIsSignedIn, setUserIsSignedIn] = useState(false);
-
-        useEffect(() => {
-            fetch('/.auth/me')
-                .then(response => response.json())
-                .then(data => {
-                    setUserIsSignedIn(data && data.length > 0);
-                })
-                .catch(error => console.error('Error:', error));
-        }, []);
-
-        const handleButtonClick = () => {
-            if (userIsSignedIn) {
-                // Sign out
-                window.location.href = '/.auth/logout';
-            } else {
-                // Sign in
-                window.location.href = '/.auth/login/aad';
-            }
-        };
 
     const contents = forecasts === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
@@ -55,9 +35,7 @@ function App() {
 
     return (
         <div>
-            <button onClick={handleButtonClick}>
-                {userIsSignedIn ? 'Sign Out' : 'Sign In'}
-            </button>
+            <SignInOutButton/>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
