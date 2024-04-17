@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import './SignInOutButton';
 import SignInOutButton from './SignInOutButton';
+import UserGreeting from './UserGreeting';
 
 function App() {
     const [forecasts, setForecasts] = useState();
@@ -35,6 +36,7 @@ function App() {
 
     return (
         <div>
+            <UserGreeting />
             <SignInOutButton/>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
