@@ -8,6 +8,28 @@ function App() {
         populateWeatherData();
     }, []);
 
+    const SignInOutButton = () => {
+        const [userIsSignedIn, setUserIsSignedIn] = useState(false);
+
+        useEffect(() => {
+            fetch('/.auth/me')
+                .then(response => response.json())
+                .then(data => {
+                    setUserIsSignedIn(data && data.length > 0);
+                })
+                .catch(error => console.error('Error:', error));
+        }, []);
+
+        const handleButtonClick = () => {
+            if (userIsSignedIn) {
+                // Sign out
+                window.location.href = '/.auth/logout';
+            } else {
+                // Sign in
+                window.location.href = '/.auth/login/aad';
+            }
+        };
+
     const contents = forecasts === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
         : <table className="table table-striped" aria-labelledby="tabelLabel">
@@ -33,6 +55,9 @@ function App() {
 
     return (
         <div>
+            <button onClick={handleButtonClick}>
+                {userIsSignedIn ? 'Sign Out' : 'Sign In'}
+            </button>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
